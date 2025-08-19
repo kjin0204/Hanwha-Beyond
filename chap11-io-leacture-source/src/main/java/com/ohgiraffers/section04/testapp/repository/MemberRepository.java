@@ -9,6 +9,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/* 설명.
+ *  데이터베이스(현재는 파일) 개념과 입출력을 위해 만드러진 계층이며 성공 데이터 또는 성공/실패 여부를 반환
+ *   (지금과 같이 주로 컬렉션으로 데이터를 관리함)
+ * */
+
 public class MemberRepository {
 
     /* 설명. 초기에 Member 파일이 없다면 만들어 더미데이터(dummy data)를 쌓는다. */
@@ -41,7 +46,6 @@ public class MemberRepository {
                 oos = new MyObjectOutput(new BufferedOutputStream(new FileOutputStream(file)));
             } else {
                 oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-
             }
 
             for (Member member : members) {
@@ -80,4 +84,51 @@ public class MemberRepository {
     }
 
 
+    public Member findMemberBy(int memNo) {
+        for (Member member : memberList) {
+            if (member.getMemNo() == memNo) {
+                return member;
+            }
+        }
+        return null;
+    }
+
+    public int registMember(Member member) {
+        int result = svaeMember(member);
+
+        return result;
+    }
+
+    private int svaeMember(Member member) {
+        ObjectOutputStream oos = null;
+        int result = 0;
+
+        try {
+            oos = new MyObjectOutput(new BufferedOutputStream(new FileOutputStream(file, true)));
+            oos.writeObject(member);
+            oos.flush();    //버퍼를 사용 하고 있어 Buffer에 있는 데이터를 강제 출력
+
+            /* 설명. 파일과 memberList 동기화 */
+            /* 설명. 1. MemberList에 add */
+//            memberList.add(member);
+            /* 설명. 2. 파일 입력 후 파일에서 다시 일겅와 동기화 */
+            memberList.clear();
+            loadMembers();
+            result = 1;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (oos != null) oos.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return result;
+    }
+
+    public int findLastMemberNo() {
+        return memberList.get(memberList.size() - 1).getMemNo();
+    }
 }

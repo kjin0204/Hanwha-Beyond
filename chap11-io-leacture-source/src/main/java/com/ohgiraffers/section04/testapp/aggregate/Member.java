@@ -35,6 +35,16 @@ public class Member implements Serializable {
         this.accountStatus = accountStatus;
     }
 
+
+    /* 설명. 회원가입 시 사용자가 입력한 값을 지닌 Member 객체가 되기 위한 생성자 */
+    public Member( String id, String pwd, int age, String[] hobbies, BloodType bloodType) {
+        this.id = id;
+        this.pwd = pwd;
+        this.age = age;
+        this.hobbies = hobbies;
+        this.bloodType = bloodType;
+    }
+
     public int getMemNo() {
         return memNo;
     }
@@ -91,14 +101,6 @@ public class Member implements Serializable {
         this.accountStatus = accountStatus;
     }
 
-    /* 설명. 회원가입 시 사용자가 입력한 값을 지닌 Member 객체가 되기 위한 생성자 */
-    public Member( String id, String pwd, int age, String[] hobbies, BloodType bloodType) {
-        this.id = id;
-        this.pwd = pwd;
-        this.age = age;
-        this.hobbies = hobbies;
-        this.bloodType = bloodType;
-    }
 
     public Member() {
     }
