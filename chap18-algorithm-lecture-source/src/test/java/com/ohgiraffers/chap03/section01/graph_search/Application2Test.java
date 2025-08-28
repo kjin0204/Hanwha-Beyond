@@ -68,4 +68,13 @@ public class Application2Test {
         Integer result = Application2.solution(input);
         Assertions.assertEquals(output, result);
     }
+
+    @DisplayName("BFS1")
+    @Timeout(value = 1000, unit = TimeUnit.MILLISECONDS)
+    @ParameterizedTest
+    @MethodSource("provideSource")
+    public void BFS1test2(String input, Integer output) throws Exception {
+        Integer result = TestBFS.solution(input);
+        Assertions.assertEquals(output, result);
+    }
 }

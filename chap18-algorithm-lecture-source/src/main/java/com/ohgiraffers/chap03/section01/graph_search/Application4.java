@@ -66,8 +66,6 @@ public class Application4 {
                 visit[i] = true;
             }
         }
-
-
     }
 
     private static void bfs(int start) {
